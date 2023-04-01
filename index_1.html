@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <h1 id="hello">안녕하세요</h1>
+
+  <div class="alert-box" id="box">
+    <p id="title">알림창</p> 
+
+    <!-- 이벤트리스너 이전의 방식-->
+    <!-- <button onclick="알림창열기('none')">닫기</button> -->
+
+    <button id="close">닫기</button>
+
+  </div>
+  
+  <!--LEGACY-->
+  <!-- <button onclick="document.getElementById('box').style.display = 'block';">버튼</button> -->
+  <button onclick="알림창열기('block')">버튼</button>
+
+
+  <button onclick="알림창열기2('ID를 입력하세요')">버튼1</button>
+  <button onclick="알림창열기2('비밀번호를 입력하세요')">버튼2</button>
+
+
+  <!-- JAVA SCRIPT-->
+  <script>
+    // 기초
+    document.getElementById('hello').innerHTML = '안녕';
+    document.getElementById('hello').style.color = 'red';
+    document.getElementById('hello').style.fontSize = '50px';
+    
+    // Function 기초
+    function 알림창닫기(){
+      document.getElementById('box').style.display = 'none';
+    }
+    // Parameter 활용
+    function 알림창열기(파라미터){
+      document.getElementById('box').style.display = 파라미터;
+    }
+
+    function plus(a, b){
+      a + b;
+    }
+
+    function 알림창열기2(param){
+      document.getElementById('title').innerHTML = param;
+      document.getElementById('box').style.display = 'block';
+    }
+
+    // 이벤트리스너 addEventListener(param1, function(){})
+    document.getElementById('close').addEventListener('click', function(){
+      document.getElementById('box').style.display = 'none';
+    });
+
+  </script>
+
+</body>
+</html>

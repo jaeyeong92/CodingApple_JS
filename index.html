@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="main.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <title>index.html</title>
+  </head>
+  
+  <body>
+    <div class="black-bg">
+      <div class="white-bg">
+        <h4>로그인하세요</h4>
+        <form action="success.html">
+          <div class="my-3">
+            <input type="text" class="form-control" id="id">
+          </div>
+          <div class="my-3">
+            <input type="password" class="form-control" id="password">
+          </div>
+          <button type="submit" class="btn btn-primary" id="send">전송</button>
+          <button type="button" class="btn btn-danger" id="close">닫기</button>
+        </form>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <span class="navbar-brand">JS Shop</span>
+        <span class="badge bg-dark">Dark 🔄</span>
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav> 
+
+    <ul class="list-group">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+      <li class="list-group-item">A fourth item</li>
+      <li class="list-group-item">And a fifth one</li>
+    </ul>
+
+    <!-- <button class="login">로그인</button> -->
+
+    <div class="main-bg">
+      <h4>Shirts on Sale</h4>
+      <button id="login" class="btn btn-danger">로그인</button>
+    </div>
+
+    <div style="width: 200px; height: 100px; overflow-y: scroll;" class="lorem">
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+      Debitis rerum nam eaque aperiam delectus neque dolore magni 
+      aliquid eum natus nihil ipsa, expedita velit repellat officia 
+      ea incidunt optio commodi?</div>
+
+    <div style="height: 1000px;"></div>
+
+    <!-- <div class="alert alert-danger" id="alert">
+      <span id="alertNum">5</span>초 이내 구매시 사은품 증정 !
+    </div> -->
+
+    <!-- Carousel -->
+    <div style="overflow: hidden">
+      <div class="slide-container">
+        <div class="slide-box">
+          <img src="car1.png">
+        </div>
+        <div class="slide-box">
+          <img src="car2.png">
+        </div>
+        <div class="slide-box">
+          <img src="car3.png">
+        </div>
+      </div>
+    </div>
+
+    <button class="prev btn btn-warning">이전</button>
+    <button class="slide-1 btn btn-warning">1</button>
+    <button class="slide-2 btn btn-warning">2</button>
+    <button class="slide-3 btn btn-warning">3</button>
+    <button class="next btn btn-warning">다음</button>
+
+
+
+
+    <!-- JAVA SCRIPT -->
+    <script>
+      $('.navbar-toggler').on('click',function(){
+        document.querySelectorAll('.list-group')[0].classList.toggle('show');
+      });
+
+      // JQUERY 쓰기 이전
+      // document.querySelectorAll('.hello').innerHTML = '바보';
+      $('.hello').html('바보');
+
+      // 모달창
+      $('#login').on('click',function(){
+        $('.black-bg').addClass('show-modal');
+      });
+
+      // 모달창 닫기
+      $('#close').on('click',function(){
+        $('.black-bg').removeClass('show-modal');
+      });
+
+      // 배경눌러서 모달창 닫기 -> 이벤트 버블링 유의
+      $('.black-bg').on('click',function(e){
+        if(e.target == e.currentTarget){
+          $('.black-bg').removeClass('show-modal');
+        }
+        // e.target; // 유저가 실제로 누른 요소
+        // e.currentTarget; //이벤트리스너 달린 곳 == this;
+        // e.preventDefault(); // form전송같은 이벤트 기본동작 방지
+        // e.stopPropagation(); // 내 상위요소로의 이벤트 버블링을 방지
+
+        // class조작으로 띄우면 class 조작으로 닫아야한다.
+        // $('.black-bg').css('display','none');
+
+      });
+      
+      // Form 공백 확인, form태그 안에서 submit 이벤트 발생 시
+      $('form').on('submit',function(e){
+        if($('#id').val() == ''){
+          alert('ID를 확인해주세요');
+          e.preventDefault();
+        }
+
+        if(/\S+@\S+\.\S+/.test($('#id').val()) == false){
+          alert('이메일 형식이 올바르지 않습니다');
+          e.preventDefault();
+        }
+
+        if($('#password').val() == ''){
+          alert('비밀번호를 확인해주세요');
+          e.preventDefault();
+        } else {
+          if($('#password').val().length < 6){
+            alert('비밀번호가 짧습니다');
+            e.preventDefault();
+          }
+        }
+      });
+
+      // input,change 이벤트
+      $('#id').on('input',function(){
+        console.log('change!');
+      });
+
+      // Dark Mode
+      // badge 클릭 시마다 내부 글자를 Light->Dark->Light로 변경
+      var clickCount = 0;
+
+      $('.badge').on('click',function(){
+        clickCount += 1;
+        if(clickCount % 2 == 0){
+          $('.badge').text('Dark🔄');
+          $('.badge').removeClass('bg-secondary');
+          $('.badge').addClass('bg-dark');
+        } else {
+          $('.badge').text('Light🔄');
+          $('.badge').removeClass('bg-dark');
+          $('.badge').addClass('bg-secondary');
+        }
+      });
+
+      // setTimeout
+      // setTimeout(function(){
+      //   $('#alert').hide();
+      // }, 3000)
+
+      let count = 5;
+      setInterval(() => {
+        count -= 1;
+        if($('#alertNum').text() < 1){
+          $('#alert').hide();
+        } else {
+          $('#alertNum').text(count);
+        }
+      }, 1000);
+
+      // Carousel
+
+      let nowPic = 1;
+
+      $('.slide-1').on('click',function(){
+        $('.slide-container').css('transform','translateX(0vw)');
+        nowPic = 1;
+      });
+
+      $('.slide-2').on('click',function(){
+        $('.slide-container').css('transform','translateX(-100vw)');
+        nowPic = 2;
+      });
+        
+      $('.slide-3').on('click',function(){
+        $('.slide-container').css('transform','translateX(-200vw)');
+        nowPic = 3;
+      });
+
+      $('.next').on('click',function(){
+        // if(nowPic == 1){
+        //   $('.slide-container').css('transform','translateX(-100vw)');
+        //   nowPic = 2;
+        // } else if(nowPic == 2){
+        //   $('.slide-container').css('transform','translateX(-200vw)');
+        //   nowPic = 3;
+        // } else {
+        //   $('.slide-container').css('transform','translateX(0vw)');
+        //   nowPic = 1;
+        // }
+        if(nowPic == 3){
+          nowPic = 0;
+        }  
+        $('.slide-container').css('transform','translateX(-'+nowPic+'00vw)');
+        nowPic += 1;
+      });
+
+      $('.prev').on('click',function(){
+        if(nowPic == 1){
+          $('.slide-container').css('transform','translateX(-200vw)');
+          nowPic = 3;
+        } else if(nowPic == 2){
+          $('.slide-container').css('transform','translateX(0vw)');
+          nowPic = 1;
+        } else {
+          $('.slide-container').css('transform','translateX(-100vw)');
+          nowPic = 2;
+        }
+      });
+
+      // 스크롤 이벤트
+      window.addEventListener('scroll',function(){
+        // console.log(window.scrollY);
+      });
+
+      $(window).on('scroll',function(){
+        // console.log($(window).scrollTop());
+      });
+
+      //div의 스크롤바 내린 양 + 눈에보이는 div박스의 높이(style:height) == div의 실제높이
+      $('.lorem').on('scroll',function(){
+        // 스크롤바 내린 높이
+        let 높이 = document.querySelector('.lorem').clientHeight;
+        let 스크롤양 = document.querySelector('.lorem').scrollTop;
+        let 실제높이 = document.querySelector('.lorem').scrollHeight;
+
+        if(높이+스크롤양 == 실제높이){
+          alert('다 읽었어요!');
+        }
+      });
+
+      // 스크롤바 100px 내리면 로고 폰트사이즈 작게
+      $(window).on('scroll',function(){
+        if($(window).scrollTop() >= 100){
+          $('.navbar-brand').css('font-size','20px');
+        } else {
+          $('.navbar-brand').css('font-size','30px');
+        }
+      });
+
+      
+
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  </body>
+</html>
